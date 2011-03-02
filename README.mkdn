@@ -1,0 +1,111 @@
+# NAME
+
+IPC::Run3::Simple - Simple utility module to make the easy to use IPC::Run3 even more easy to use.
+
+# VERSION
+
+version 0.001
+
+# SYNOPSIS
+
+ use IPC::Run3::Simple;
+
+ # Dead simple, ignoring system error and getting rid of the final newline in
+ # the output.
+
+ IPC::Run3::Simple::chomp_out( 1 );
+ my ( $out, $err ) = run3( [qw( ls -AGlh )] );
+ die $err if $err;
+
+ # Manipulate $out however you want.
+
+ # Dump file listing into array, then chomp the array, ignoring any errors.
+
+ IPC::Run3::Simple::chomp_out( 1 );
+ my $args = {
+
+  'cmd'    => [qw( ls -AGlh )],
+  'stdout' => \my @files,
+
+ };
+
+ for my $file ( @files ) { print "filename: $file\n" }
+
+# METHODS
+
+## chomp_err
+
+  If a true value is passed, run3 will chomp any error if it's stored in
+  a scalar or array ref.
+
+## chomp_out
+
+  If a true value is passed, run3 will chomp the result if it's stored in
+  a scalar or array ref.
+
+## croak_on_err
+
+  If a true value is passed, run3 will croak instead of returning.
+
+## default_stdin
+
+  Set the default stdin to be used.
+
+## default_stdout
+
+  Set the default stdout be used.
+
+## default_stderr
+
+  Set the default stderr to be used.
+
+## run3
+
+This method is exported into the calling namespace.
+
+Expects either a reference to an array or a reference to a hash.
+
+If a reference to an array is passed in then it is assumed to be a list of the
+command and option(s) to be run. A list containing the results, errors and exit
+code (in that order) will be returned. See SYNOPSIS for an example.
+
+If a reference to a hash is passed in, the following information is expected:
+
+ See IPC::Run3 documentation for possible values for each of these keys.
+
+ 'cmd'     Required
+ 'stdin'   Optional
+ 'stdout'  Optional
+ 'stderr'  Optional
+ 'options' Optional
+
+Note: If any of stdin, stdout or stderr are not passed in the hash 'undef' will be used in their place.
+
+In addition, the following variables can be set, either in the hash passed in
+or globally via $IPC::Run3::Simple::VARIABLE.
+
+ CROAK_ON_ERR If true, run3 will 'croak $stderr' instead of returning if $stderr
+ contains anything.  Default is false.
+
+ CHOMP_OUT If true, run3 will 'chomp $$stdout' if stdout is a scalar reference
+ or 'chomp @$stdout' if stdout is an array reference. Otherwise, it has no
+ effect. Default is false.
+
+ CHOMP_ERR If true, run3 will 'chomp $$stderr' if stderr is a scalar reference
+ or 'chomp @$stderr' if stderr is an array reference. Otherwise, it has no
+ effect.  Default is false.
+
+# INSTALLATION
+
+See perlmodinstall for information and options on installing Perl modules.
+
+# AUTHOR
+
+Alan Young <harleypig@gmail.com>
+
+# COPYRIGHT AND LICENSE
+
+This software is copyright (c) 2010 by Alan Young.
+
+This is free software; you can redistribute it and/or modify it under
+the same terms as the Perl 5 programming language system itself.

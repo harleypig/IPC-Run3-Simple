@@ -1,0 +1,74 @@
+{
+   "abstract" : "Simple utility module to make the easy to use IPC::Run3 even more easy to use.",
+   "author" : [
+      "Alan Young <harleypig@gmail.com>"
+   ],
+   "dynamic_config" : 0,
+   "generated_by" : "Dist::Zilla version 4.200004, CPAN::Meta::Converter version 2.110580",
+   "license" : [
+      "perl_5"
+   ],
+   "meta-spec" : {
+      "url" : "http://search.cpan.org/perldoc?CPAN::Meta::Spec",
+      "version" : "2"
+   },
+   "name" : "IPC-Run3-Simple",
+   "no_index" : {
+      "directory" : [
+         "t",
+         "xt"
+      ]
+   },
+   "prereqs" : {
+      "build" : {
+         "requires" : {
+            "Module::Build" : "0.3601"
+         }
+      },
+      "configure" : {
+         "requires" : {
+            "ExtUtils::MakeMaker" : "6.31",
+            "Module::Build" : "0.3601"
+         }
+      },
+      "runtime" : {
+         "requires" : {
+            "Carp" : 0,
+            "Exporter" : 0,
+            "IPC::Run3" : 0
+         }
+      },
+      "test" : {
+         "requires" : {
+            "English" : 0,
+            "File::Find" : 0,
+            "File::Temp" : 0,
+            "Path::Class" : 0,
+            "Scalar::Util" : 0,
+            "Test::More" : "0.94",
+            "Test::Perl::Critic::Progressive" : 0,
+            "Try::Tiny" : 0,
+            "perl" : "5.004"
+         }
+      }
+   },
+   "provides" : {
+      "IPC::Run3::Simple" : {
+         "file" : "lib/IPC/Run3/Simple.pm",
+         "version" : "0.001"
+      }
+   },
+   "release_status" : "stable",
+   "resources" : {
+      "bugtracker" : {
+         "web" : "https://github.com/harleypig/ipc-run3-simple/issues"
+      },
+      "repository" : {
+         "type" : "git",
+         "url" : "git://github.com/harleypig/ipc-run3-simple.git",
+         "web" : "https://github.com/harleypig/ipc-run3-simple"
+      }
+   },
+   "version" : "0.001"
+}
+
