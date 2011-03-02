@@ -5,20 +5,56 @@ package IPC::Run3::Simple;
 use strict;
 use warnings;
 
-use Carp;
-use IPC::Run3;
-use Exporter;
+# VERSION
 
-use base 'Exporter';
+use Carp;
+use IPC::Run3 ();
+use Exporter 'import';
 
 our @EXPORT = qw( run3 );
 our %EXPORT_TAGS = ( 'all' => \@EXPORT );
 
 our $CHOMP_ERR  = 0;
 our $CHOMP_OUT  = 0;
-our $DIE_ON_ERR = 0;
+our $CROAK_ON_ERR = 0;
+our $DEFAULT_STDIN  = undef;
+our $DEFAULT_STDOUT = undef;
+our $DEFAULT_STDERR = undef;
 
-# VERSION
+=method chomp_err
+
+  If a true value is passed, run3 will chomp any error if it's stored in
+  a scalar or array ref.
+
+=method chomp_out
+
+  If a true value is passed, run3 will chomp the result if it's stored in
+  a scalar or array ref.
+
+=method croak_on_err
+
+  If a true value is passed, run3 will croak instead of returning.
+
+=method default_stdin
+
+  Set the default stdin to be used.
+
+=method default_stdout
+
+  Set the default stdout be used.
+
+=method default_stderr
+
+  Set the default stderr to be used.
+
+=cut
+
+sub chomp_err      { $CHOMP_ERR      = !! +shift }
+sub chomp_out      { $CHOMP_OUT      = !! +shift }
+sub croak_on_err     { $CROAK_ON_ERR     = !! +shift }
+sub default_stdin  { $DEFAULT_STDIN  = shift }
+sub default_stdout { $DEFAULT_STDOUT = shift }
+sub default_stderr { $DEFAULT_STDERR = shift }
 
 =method run3
 
@@ -45,7 +81,7 @@ Note: If any of stdin, stdout or stderr are not passed in the hash 'undef' will 
 In addition, the following variables can be set, either in the hash passed in
 or globally via $IPC::Run3::Simple::VARIABLE.
 
- DIE_ON_ERR If true, run3 will 'croak $stderr' instead of returning if $stderr
+ CROAK_ON_ERR If true, run3 will 'croak $stderr' instead of returning if $stderr
  contains anything.  Default is false.
 
  CHOMP_OUT If true, run3 will 'chomp $$stdout' if stdout is a scalar reference
@@ -58,7 +94,6 @@ or globally via $IPC::Run3::Simple::VARIABLE.
 
 =cut
 
-no warnings 'redefine';
 sub run3 {
 
   my $arg = shift;
@@ -66,15 +101,15 @@ sub run3 {
 
   my $return_array = 0;
 
-  my ( $cmd, $stdin, $stdout, $stderr, $options, $out, $err );
+  my ( $cmd, $stdin, $stdout, $stderr, $options, $out );
 
   if ( $ref eq 'ARRAY' ) {
 
     $return_array++;
     $cmd     = $arg;
-    $stdin   = undef;
+    $stdin   = $DEFAULT_STDIN;
     $stdout  = \$out;
-    $stderr  = \$err;
+    $stderr  = $DEFAULT_STDERR;
     $options = {};
 
   } elsif ( $ref eq 'HASH' ) {
@@ -83,10 +118,19 @@ sub run3 {
       unless exists $arg->{ 'cmd' } && ref $arg->{ 'cmd' } eq 'ARRAY';
 
     $cmd     = $arg->{ 'cmd' };
-    $stdin   = $arg->{ 'stdin' }   || undef;
-    $stdout  = $arg->{ 'stdout' }  || undef;
-    $stderr  = $arg->{ 'stderr' }  || undef;
+    $stdin   = $arg->{ 'stdin' }   || $DEFAULT_STDIN;
+    $stdout  = $arg->{ 'stdout' }  || $DEFAULT_STDOUT;
+    $stderr  = $arg->{ 'stderr' }  || $DEFAULT_STDERR;
     $options = $arg->{ 'options' } || {};
+
+    chomp_err( $arg->{ 'CHOMP_ERR' } )
+      if exists $arg->{ 'CHOMP_ERR' };
+
+    chomp_out( $arg->{ 'CHOMP_OUT' } )
+      if exists $arg->{ 'CHOMP_OUT' };
+
+    croak_on_err( $arg->{ 'CROAK_ON_ERR' } )
+      if exists $arg->{ 'CROAK_ON_ERR' };
 
   } else {
 
@@ -99,7 +143,7 @@ sub run3 {
   my $syserr = $?;
 
   croak $stderr
-    if $DIE_ON_ERR && $$stderr ne '';
+    if $CROAK_ON_ERR && $$stderr ne '';
 
   chomp $$stdout
     if $CHOMP_OUT && ref $stdout eq 'SCALAR';
@@ -108,16 +152,15 @@ sub run3 {
     if $CHOMP_OUT && ref $stdout eq 'ARRAY';
 
   chomp $$stderr
-    if $CHOMP_ERR && ref $stdout eq 'SCALAR';
+    if $CHOMP_ERR && ref $stderr eq 'SCALAR';
 
   chomp @$stderr
-    if $CHOMP_ERR && ref $stdout eq 'ARRAY';
+    if $CHOMP_ERR && ref $stderr eq 'ARRAY';
 
-  return ( $out, $err, $syserr )
+  return ( $stdout, $stderr, $syserr )
     if $return_array;
 
 }
-use warnings 'redefine';
 
 1;
 
