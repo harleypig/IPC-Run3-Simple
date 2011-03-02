@@ -171,7 +171,7 @@ sub run3 {
  # Dead simple, ignoring system error and getting rid of the final newline in
  # the output.
 
- $IPC::Run3::Simple::CHOMP_OUT = 1;
+ IPC::Run3::Simple::chomp_out( 1 );
  my ( $out, $err ) = run3( [qw( ls -AGlh )] );
  die $err if $err;
 
@@ -179,7 +179,7 @@ sub run3 {
 
  # Dump file listing into array, then chomp the array, ignoring any errors.
 
- $IPC::Run3::Simple::CHOMP_OUT = 1;
+ IPC::Run3::Simple::chomp_out( 1 );
  my $args = {
 
   'cmd'    => [qw( ls -AGlh )],
