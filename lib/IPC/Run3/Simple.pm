@@ -2,6 +2,9 @@ package IPC::Run3::Simple;
 
 # ABSTRACT: Simple utility module to make the easy to use IPC::Run3 even more easy to use.
 
+use strict;
+use warnings;
+
 use Carp;
 use IPC::Run3;
 use Exporter;
@@ -55,6 +58,7 @@ or globally via $IPC::Run3::Simple::VARIABLE.
 
 =cut
 
+no warnings 'redefine';
 sub run3 {
 
   my $arg = shift;
@@ -62,7 +66,7 @@ sub run3 {
 
   my $return_array = 0;
 
-  my ( $cmd, $stdin, $stdout, $stderr, $out, $err );
+  my ( $cmd, $stdin, $stdout, $stderr, $options, $out, $err );
 
   if ( $ref eq 'ARRAY' ) {
 
@@ -113,6 +117,7 @@ sub run3 {
     if $return_array;
 
 }
+use warnings 'redefine';
 
 1;
 
@@ -134,8 +139,8 @@ sub run3 {
  $IPC::Run3::Simple::CHOMP_OUT = 1;
  my $args = {
 
-  'cmd' = [qw( ls -AGlh )],
-  'stdout' = \my @files,
+  'cmd'    => [qw( ls -AGlh )],
+  'stdout' => \my @files,
 
  };
 
