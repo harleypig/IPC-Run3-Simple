@@ -19,7 +19,6 @@ my %module_build_args = (
     'perl' => '5.004'
   },
   'configure_requires' => {
-    'ExtUtils::MakeMaker' => '6.31',
     'Module::Build' => '0.3601'
   },
   'dist_abstract' => 'Simple utility module to make the easy to use IPC::Run3 even more easy to use.',
@@ -27,7 +26,7 @@ my %module_build_args = (
     'Alan Young <harleypig@gmail.com>'
   ],
   'dist_name' => 'IPC-Run3-Simple',
-  'dist_version' => '0.001',
+  'dist_version' => '0.002',
   'license' => 'perl',
   'module_name' => 'IPC::Run3::Simple',
   'recommends' => {},

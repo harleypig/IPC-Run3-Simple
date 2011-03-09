@@ -4,7 +4,7 @@ IPC::Run3::Simple - Simple utility module to make the easy to use IPC::Run3 even
 
 # VERSION
 
-version 0.001
+version 0.002
 
 # SYNOPSIS
 

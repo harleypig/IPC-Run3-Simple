@@ -3,7 +3,7 @@ NAME
     IPC::Run3 even more easy to use.
 
 VERSION
-    version 0.001
+    version 0.002
 
 SYNOPSIS
      use IPC::Run3::Simple;

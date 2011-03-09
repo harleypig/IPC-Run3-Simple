@@ -27,7 +27,6 @@
       },
       "configure" : {
          "requires" : {
-            "ExtUtils::MakeMaker" : "6.31",
             "Module::Build" : "0.3601"
          }
       },
@@ -55,7 +54,7 @@
    "provides" : {
       "IPC::Run3::Simple" : {
          "file" : "lib/IPC/Run3/Simple.pm",
-         "version" : "0.001"
+         "version" : "0.002"
       }
    },
    "release_status" : "stable",
@@ -69,6 +68,6 @@
          "web" : "https://github.com/harleypig/ipc-run3-simple"
       }
    },
-   "version" : "0.001"
+   "version" : "0.002"
 }
 

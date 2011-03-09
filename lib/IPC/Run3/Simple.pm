@@ -5,7 +5,7 @@ package IPC::Run3::Simple;
 use strict;
 use warnings;
 
-our $VERSION = '0.001';  # VERSION
+our $VERSION = '0.002';  # VERSION
 
 use Carp;
 use IPC::Run3 ();
@@ -108,7 +108,7 @@ IPC::Run3::Simple - Simple utility module to make the easy to use IPC::Run3 even
 
 =head1 VERSION
 
-version 0.001
+version 0.002
 
 =head1 SYNOPSIS
 
