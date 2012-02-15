@@ -10,6 +10,7 @@ BEGIN {
 
 use Test::More;
 
-eval "use Test::CPAN::Meta";
-plan skip_all => "Test::CPAN::Meta required for testing META.yml" if $@;
-meta_yaml_ok();
+eval "use Test::DistManifest";
+plan skip_all => "Test::DistManifest required for testing the manifest"
+  if $@;
+manifest_ok();

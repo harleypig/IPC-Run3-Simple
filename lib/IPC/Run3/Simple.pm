@@ -5,7 +5,7 @@ package IPC::Run3::Simple;
 use strict;
 use warnings;
 
-our $VERSION = '0.002';  # VERSION
+# VERSION
 
 use Carp;
 use IPC::Run3 ();
@@ -14,12 +14,13 @@ use Exporter 'import';
 our @EXPORT = qw( run3 );
 our %EXPORT_TAGS = ( 'all' => \@EXPORT );
 
-our $CHOMP_ERR      = 0;
-our $CHOMP_OUT      = 0;
+our $CHOMP_ERR      = 1;
+our $CHOMP_OUT      = 1;
 our $CROAK_ON_ERR   = 0;
 our $DEFAULT_STDIN  = undef;
 our $DEFAULT_STDOUT = undef;
 our $DEFAULT_STDERR = undef;
+
 
 sub chomp_err      { $CHOMP_ERR      = ! ! +shift }
 sub chomp_out      { $CHOMP_OUT      = ! ! +shift }
@@ -27,6 +28,7 @@ sub croak_on_err   { $CROAK_ON_ERR   = ! ! +shift }
 sub default_stdin  { $DEFAULT_STDIN  = shift }
 sub default_stdout { $DEFAULT_STDOUT = shift }
 sub default_stderr { $DEFAULT_STDERR = shift }
+
 
 sub run3 {
 
@@ -98,9 +100,13 @@ sub run3 {
 
 1;
 
-__END__
 
+__END__
 =pod
+
+=for :stopwords Alan Young
+
+=encoding utf-8
 
 =head1 NAME
 
@@ -108,7 +114,7 @@ IPC::Run3::Simple - Simple utility module to make the easy to use IPC::Run3 even
 
 =head1 VERSION
 
-version 0.002
+  This document describes v0.004 of IPC::Run3::Simple - released February 15, 2012 as part of IPC-Run3-Simple.
 
 =head1 SYNOPSIS
 
@@ -139,17 +145,18 @@ version 0.002
 
 =head2 chomp_err
 
-  If a true value is passed, run3 will chomp any error if it's stored in
-  a scalar or array ref.
+  If a false value is passed, run3 will not chomp any error if it's stored in
+  a scalar or array ref. Default is to chomp any error.
 
 =head2 chomp_out
 
-  If a true value is passed, run3 will chomp the result if it's stored in
-  a scalar or array ref.
+  If a false value is passed, run3 will not chomp the result if it's stored in
+  a scalar or array ref. Default is to chomp any result.
 
 =head2 croak_on_err
 
-  If a true value is passed, run3 will croak instead of returning.
+  If a false value is passed, run3 will return instead of croaking on error.
+  Default is to croak on error.
 
 =head2 default_stdin
 
@@ -189,15 +196,17 @@ In addition, the following variables can be set, either in the hash passed in
 or globally via $IPC::Run3::Simple::VARIABLE.
 
  CROAK_ON_ERR If true, run3 will 'croak $stderr' instead of returning if $stderr
- contains anything.  Default is false.
+ contains anything.  Default is to return instead of croaking.
 
  CHOMP_OUT If true, run3 will 'chomp $$stdout' if stdout is a scalar reference
  or 'chomp @$stdout' if stdout is an array reference. Otherwise, it has no
- effect. Default is false.
+ effect. If false, nothing will be done to the output of the call. Default is
+ true.
 
  CHOMP_ERR If true, run3 will 'chomp $$stderr' if stderr is a scalar reference
  or 'chomp @$stderr' if stderr is an array reference. Otherwise, it has no
- effect.  Default is false.
+ effect. If false, nothing will be done to the error output of the call.
+ Default is true.
 
 =head1 INSTALLATION
 
@@ -209,9 +218,33 @@ Alan Young <harleypig@gmail.com>
 
 =head1 COPYRIGHT AND LICENSE
 
-This software is copyright (c) 2010 by Alan Young.
+This software is copyright (c) 2012 by Alan Young.
 
 This is free software; you can redistribute it and/or modify it under
 the same terms as the Perl 5 programming language system itself.
 
+=head1 DISCLAIMER OF WARRANTY
+
+BECAUSE THIS SOFTWARE IS LICENSED FREE OF CHARGE, THERE IS NO WARRANTY
+FOR THE SOFTWARE, TO THE EXTENT PERMITTED BY APPLICABLE LAW. EXCEPT
+WHEN OTHERWISE STATED IN WRITING THE COPYRIGHT HOLDERS AND/OR OTHER
+PARTIES PROVIDE THE SOFTWARE "AS IS" WITHOUT WARRANTY OF ANY KIND,
+EITHER EXPRESSED OR IMPLIED, INCLUDING, BUT NOT LIMITED TO, THE
+IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR
+PURPOSE. THE ENTIRE RISK AS TO THE QUALITY AND PERFORMANCE OF THE
+SOFTWARE IS WITH YOU. SHOULD THE SOFTWARE PROVE DEFECTIVE, YOU ASSUME
+THE COST OF ALL NECESSARY SERVICING, REPAIR, OR CORRECTION.
+
+IN NO EVENT UNLESS REQUIRED BY APPLICABLE LAW OR AGREED TO IN WRITING
+WILL ANY COPYRIGHT HOLDER, OR ANY OTHER PARTY WHO MAY MODIFY AND/OR
+REDISTRIBUTE THE SOFTWARE AS PERMITTED BY THE ABOVE LICENCE, BE LIABLE
+TO YOU FOR DAMAGES, INCLUDING ANY GENERAL, SPECIAL, INCIDENTAL, OR
+CONSEQUENTIAL DAMAGES ARISING OUT OF THE USE OR INABILITY TO USE THE
+SOFTWARE (INCLUDING BUT NOT LIMITED TO LOSS OF DATA OR DATA BEING
+RENDERED INACCURATE OR LOSSES SUSTAINED BY YOU OR THIRD PARTIES OR A
+FAILURE OF THE SOFTWARE TO OPERATE WITH ANY OTHER SOFTWARE), EVEN IF
+SUCH HOLDER OR OTHER PARTY HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH
+DAMAGES.
+
 =cut
+

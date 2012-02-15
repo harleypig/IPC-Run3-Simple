@@ -1,0 +1,6 @@
+Revision history for IPC-Run3-Simple
+
+0.004     2012-02-15 11:22:16 America/Boise
+  - Started using new Changes file format
+  - Updated dzil and weaver files
+  - Changed defaults to match my own preferences

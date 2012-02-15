@@ -425,6 +425,7 @@ BEGIN {
     Test::Pod::Coverage
     Test::Portability::Files
     Test::YAML::Meta
+    open
   );
 
   my $Test = Test::Builder->new;

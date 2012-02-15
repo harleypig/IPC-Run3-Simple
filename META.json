@@ -4,7 +4,7 @@
       "Alan Young <harleypig@gmail.com>"
    ],
    "dynamic_config" : 0,
-   "generated_by" : "Dist::Zilla version 4.200004, CPAN::Meta::Converter version 2.110580",
+   "generated_by" : "Dist::Zilla version 4.300007, CPAN::Meta::Converter version 2.113640",
    "license" : [
       "perl_5"
    ],
@@ -34,7 +34,9 @@
          "requires" : {
             "Carp" : 0,
             "Exporter" : 0,
-            "IPC::Run3" : 0
+            "IPC::Run3" : 0,
+            "strict" : 0,
+            "warnings" : 0
          }
       },
       "test" : {
@@ -42,32 +44,19 @@
             "English" : 0,
             "File::Find" : 0,
             "File::Temp" : 0,
-            "Path::Class" : 0,
             "Scalar::Util" : 0,
+            "Test::CheckDeps" : 0,
             "Test::More" : "0.94",
-            "Test::Perl::Critic::Progressive" : 0,
-            "Try::Tiny" : 0,
+            "Test::Requires" : 0,
+            "Test::UseAllModules" : 0,
             "perl" : "5.004"
          }
       }
    },
-   "provides" : {
-      "IPC::Run3::Simple" : {
-         "file" : "lib/IPC/Run3/Simple.pm",
-         "version" : "0.002"
-      }
-   },
    "release_status" : "stable",
    "resources" : {
-      "bugtracker" : {
-         "web" : "https://github.com/harleypig/ipc-run3-simple/issues"
-      },
-      "repository" : {
-         "type" : "git",
-         "url" : "git://github.com/harleypig/ipc-run3-simple.git",
-         "web" : "https://github.com/harleypig/ipc-run3-simple"
-      }
+      "repository" : {}
    },
-   "version" : "0.002"
+   "version" : "0.004"
 }
 
