@@ -14,8 +14,8 @@ use Exporter 'import';
 our @EXPORT = qw( run3 );
 our %EXPORT_TAGS = ( 'all' => \@EXPORT );
 
-our $CHOMP_ERR  = 0;
-our $CHOMP_OUT  = 0;
+our $CHOMP_ERR  = 1;
+our $CHOMP_OUT  = 1;
 our $CROAK_ON_ERR = 0;
 our $DEFAULT_STDIN  = undef;
 our $DEFAULT_STDOUT = undef;
@@ -23,17 +23,18 @@ our $DEFAULT_STDERR = undef;
 
 =method chomp_err
 
-  If a true value is passed, run3 will chomp any error if it's stored in
-  a scalar or array ref.
+  If a false value is passed, run3 will not chomp any error if it's stored in
+  a scalar or array ref. Default is to chomp any error.
 
 =method chomp_out
 
-  If a true value is passed, run3 will chomp the result if it's stored in
-  a scalar or array ref.
+  If a false value is passed, run3 will not chomp the result if it's stored in
+  a scalar or array ref. Default is to chomp any result.
 
 =method croak_on_err
 
-  If a true value is passed, run3 will croak instead of returning.
+  If a false value is passed, run3 will return instead of croaking on error.
+  Default is to croak on error.
 
 =method default_stdin
 
@@ -51,7 +52,7 @@ our $DEFAULT_STDERR = undef;
 
 sub chomp_err      { $CHOMP_ERR      = !! +shift }
 sub chomp_out      { $CHOMP_OUT      = !! +shift }
-sub croak_on_err     { $CROAK_ON_ERR     = !! +shift }
+sub croak_on_err   { $CROAK_ON_ERR   = !! +shift }
 sub default_stdin  { $DEFAULT_STDIN  = shift }
 sub default_stdout { $DEFAULT_STDOUT = shift }
 sub default_stderr { $DEFAULT_STDERR = shift }
@@ -82,15 +83,17 @@ In addition, the following variables can be set, either in the hash passed in
 or globally via $IPC::Run3::Simple::VARIABLE.
 
  CROAK_ON_ERR If true, run3 will 'croak $stderr' instead of returning if $stderr
- contains anything.  Default is false.
+ contains anything.  Default is to return instead of croaking.
 
  CHOMP_OUT If true, run3 will 'chomp $$stdout' if stdout is a scalar reference
  or 'chomp @$stdout' if stdout is an array reference. Otherwise, it has no
- effect. Default is false.
+ effect. If false, nothing will be done to the output of the call. Default is
+ true.
 
  CHOMP_ERR If true, run3 will 'chomp $$stderr' if stderr is a scalar reference
  or 'chomp @$stderr' if stderr is an array reference. Otherwise, it has no
- effect.  Default is false.
+ effect. If false, nothing will be done to the error output of the call.
+ Default is true.
 
 =cut
 
