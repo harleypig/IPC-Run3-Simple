@@ -33,4 +33,4 @@ requires:
   strict: 0
   warnings: 0
 resources: {}
-version: 0.004
+version: 0.005

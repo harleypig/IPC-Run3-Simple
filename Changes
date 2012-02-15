@@ -1,5 +1,8 @@
 Revision history for IPC-Run3-Simple
 
+0.005     2012-02-15 12:09:47 America/Boise
+  - Forgot to include the version number
+
 0.004     2012-02-15 11:22:16 America/Boise
   - Started using new Changes file format
   - Updated dzil and weaver files

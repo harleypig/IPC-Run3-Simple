@@ -5,11 +5,11 @@ package IPC::Run3::Simple;
 use strict;
 use warnings;
 
-# VERSION
-
 use Carp;
 use IPC::Run3 ();
 use Exporter 'import';
+
+our $VERSION = '0.005'; # VERSION
 
 our @EXPORT = qw( run3 );
 our %EXPORT_TAGS = ( 'all' => \@EXPORT );
@@ -114,7 +114,7 @@ IPC::Run3::Simple - Simple utility module to make the easy to use IPC::Run3 even
 
 =head1 VERSION
 
-  This document describes v0.004 of IPC::Run3::Simple - released February 15, 2012 as part of IPC-Run3-Simple.
+  This document describes v0.005 of IPC::Run3::Simple - released February 15, 2012 as part of IPC-Run3-Simple.
 
 =head1 SYNOPSIS
 
