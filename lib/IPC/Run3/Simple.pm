@@ -5,11 +5,11 @@ package IPC::Run3::Simple;
 use strict;
 use warnings;
 
-# VERSION
-
 use Carp;
 use IPC::Run3 ();
 use Exporter 'import';
+
+# VERSION
 
 our @EXPORT = qw( run3 );
 our %EXPORT_TAGS = ( 'all' => \@EXPORT );
