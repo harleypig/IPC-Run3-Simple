@@ -1,4 +1,6 @@
 Revision history for {{ $dist->name }}
 
-{{ '{{$NEXT}}' }}
-  - Initial Creation
+{{$NEXT}}
+  - Started using new Changes file format
+  - Updated dzil and weaver files
+  - Changed defaults to match my own preferences
