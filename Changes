@@ -1,6 +1,7 @@
 Revision history for {{ $dist->name }}
 
 {{$NEXT}}
+  - Forgot to include the version number
 
 0.004     2012-02-15 11:22:16 America/Boise
   - Started using new Changes file format
