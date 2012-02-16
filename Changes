@@ -1,6 +1,9 @@
 Revision history for {{ $dist->name }}
 
 {{$NEXT}}
+  - fixed up some documentation
+  - added timing on system call
+  - added  option to tee output
 
 0.005     2012-02-15 12:09:47 America/Boise
   - Forgot to include the version number
