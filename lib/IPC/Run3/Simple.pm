@@ -12,7 +12,15 @@ use Exporter 'import';
 # VERSION
 
 our @EXPORT = qw( run3 );
-our %EXPORT_TAGS = ( 'all' => \@EXPORT );
+
+our @EXPORT_OK = qw(
+
+  chomp_err chomp_out croak_on_err default_stderr default_stdin default_stdout
+  tee_systemcall
+
+);
+
+our %EXPORT_TAGS = ( 'all' => [ @EXPORT, @EXPORT_OK ] );
 
 our $CHOMP_ERR       = 1;
 our $CHOMP_OUT       = 1;
