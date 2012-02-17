@@ -28,7 +28,6 @@ our $CROAK_ON_ERR    = 0;
 our $DEFAULT_STDIN   = undef;
 our $DEFAULT_STDOUT  = undef;
 our $DEFAULT_STDERR  = undef;
-our $TIME_SYSTEMCALL = 1;
 our $TEE_SYSTEMCALL  = 0;
 
 =method chomp_err
@@ -102,7 +101,7 @@ if ( eval { require Time::HiRes } ) {
   eval q{sub tv_interval {
     my ( $t0, $t1 ) = @_;
     $t1 = [ gettimeofday() ] unless defined $t1;
-    return sprintf '%.6f', $t1->[0] - $t0->[0];
+    $t1->[0] - $t0->[0];
   }};
   croak "Unable to create tv_interval sub: $@" if $@;
 

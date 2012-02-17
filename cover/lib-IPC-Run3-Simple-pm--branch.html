@@ -20,24 +20,24 @@ http://www.pjcj.net
 <h1>Branch Coverage</h1>
 <table>
 <tr><td class="h" align="right">File:</td><td align="left">lib/IPC/Run3/Simple.pm</td></tr>
-<tr><td class="h" align="right">Coverage:</td><td align="left" class="c0">0.0%</td></tr>
+<tr><td class="h" align="right">Coverage:</td><td align="left" class="c0">38.5%</td></tr>
 </table>
 <div><br/></div>
 <table>
 <tr><th>line</th><th>%</th><th colspan="2">coverage</th><th>branch</th></tr>
-<tr><td class="h"><a id="L81">81</a></td><td class="c0">0</td><td class="c0">T</td><td class="c0">F</td><td class="s">if ($ref eq &#39;ARRAY&#39;) { }</td></tr>
-<tr><td class="h"></td><td class="c0">0</td><td class="c0">T</td><td class="c0">F</td><td class="s">elsif ($ref eq &#39;HASH&#39;) { }</td></tr>
-<tr><td class="h"><a id="L92">92</a></td><td class="c0">0</td><td class="c0">T</td><td class="c0">F</td><td class="s">unless exists $$arg{&#39;cmd&#39;} and ref $$arg{&#39;cmd&#39;} eq &#39;ARRAY&#39;</td></tr>
-<tr><td class="h"><a id="L101">101</a></td><td class="c0">0</td><td class="c0">T</td><td class="c0">F</td><td class="s">if exists $$arg{&#39;CHOMP_ERR&#39;}</td></tr>
-<tr><td class="h"><a id="L104">104</a></td><td class="c0">0</td><td class="c0">T</td><td class="c0">F</td><td class="s">if exists $$arg{&#39;CHOMP_OUT&#39;}</td></tr>
-<tr><td class="h"><a id="L107">107</a></td><td class="c0">0</td><td class="c0">T</td><td class="c0">F</td><td class="s">if exists $$arg{&#39;CROAK_ON_ERR&#39;}</td></tr>
-<tr><td class="h"><a id="L118">118</a></td><td class="c0">0</td><td class="c0">T</td><td class="c0">F</td><td class="s">if ($TEE_SYSTEMCALL) { }</td></tr>
-<tr><td class="h"><a id="L136">136</a></td><td class="c0">0</td><td class="c0">T</td><td class="c0">F</td><td class="s">if $CROAK_ON_ERR and $$stderr ne &#39;&#39;</td></tr>
-<tr><td class="h"><a id="L139">139</a></td><td class="c0">0</td><td class="c0">T</td><td class="c0">F</td><td class="s">if $CHOMP_OUT and ref $stdout eq &#39;SCALAR&#39;</td></tr>
-<tr><td class="h"><a id="L142">142</a></td><td class="c0">0</td><td class="c0">T</td><td class="c0">F</td><td class="s">if $CHOMP_OUT and ref $stdout eq &#39;ARRAY&#39;</td></tr>
-<tr><td class="h"><a id="L145">145</a></td><td class="c0">0</td><td class="c0">T</td><td class="c0">F</td><td class="s">if $CHOMP_ERR and ref $stderr eq &#39;SCALAR&#39;</td></tr>
-<tr><td class="h"><a id="L148">148</a></td><td class="c0">0</td><td class="c0">T</td><td class="c0">F</td><td class="s">if $CHOMP_ERR and ref $stderr eq &#39;ARRAY&#39;</td></tr>
-<tr><td class="h"><a id="L151">151</a></td><td class="c0">0</td><td class="c0">T</td><td class="c0">F</td><td class="s">if $return_array</td></tr>
+<tr><td class="h"><a id="L88">88</a></td><td class="c3">100</td><td class="c3">T</td><td class="c3">F</td><td class="s">if ($ref eq &#39;ARRAY&#39;) { }</td></tr>
+<tr><td class="h"></td><td class="c0">50</td><td class="c0">T</td><td class="c3">F</td><td class="s">elsif ($ref eq &#39;HASH&#39;) { }</td></tr>
+<tr><td class="h"><a id="L99">99</a></td><td class="c0">0</td><td class="c0">T</td><td class="c0">F</td><td class="s">unless exists $$arg{&#39;cmd&#39;} and ref $$arg{&#39;cmd&#39;} eq &#39;ARRAY&#39;</td></tr>
+<tr><td class="h"><a id="L108">108</a></td><td class="c0">0</td><td class="c0">T</td><td class="c0">F</td><td class="s">if exists $$arg{&#39;CHOMP_ERR&#39;}</td></tr>
+<tr><td class="h"><a id="L111">111</a></td><td class="c0">0</td><td class="c0">T</td><td class="c0">F</td><td class="s">if exists $$arg{&#39;CHOMP_OUT&#39;}</td></tr>
+<tr><td class="h"><a id="L114">114</a></td><td class="c0">0</td><td class="c0">T</td><td class="c0">F</td><td class="s">if exists $$arg{&#39;CROAK_ON_ERR&#39;}</td></tr>
+<tr><td class="h"><a id="L125">125</a></td><td class="c0">50</td><td class="c0">T</td><td class="c3">F</td><td class="s">if ($TEE_SYSTEMCALL) { }</td></tr>
+<tr><td class="h"><a id="L143">143</a></td><td class="c0">50</td><td class="c0">T</td><td class="c3">F</td><td class="s">if $CROAK_ON_ERR and $$stderr ne &#39;&#39;</td></tr>
+<tr><td class="h"><a id="L146">146</a></td><td class="c0">50</td><td class="c3">T</td><td class="c0">F</td><td class="s">if $CHOMP_OUT and ref $stdout eq &#39;SCALAR&#39;</td></tr>
+<tr><td class="h"><a id="L149">149</a></td><td class="c0">50</td><td class="c0">T</td><td class="c3">F</td><td class="s">if $CHOMP_OUT and ref $stdout eq &#39;ARRAY&#39;</td></tr>
+<tr><td class="h"><a id="L152">152</a></td><td class="c0">50</td><td class="c0">T</td><td class="c3">F</td><td class="s">if $CHOMP_ERR and ref $stderr eq &#39;SCALAR&#39;</td></tr>
+<tr><td class="h"><a id="L155">155</a></td><td class="c0">50</td><td class="c0">T</td><td class="c3">F</td><td class="s">if $CHOMP_ERR and ref $stderr eq &#39;ARRAY&#39;</td></tr>
+<tr><td class="h"><a id="L158">158</a></td><td class="c0">50</td><td class="c3">T</td><td class="c0">F</td><td class="s">if $return_array</td></tr>
 </table>
 </body>
 </html>
