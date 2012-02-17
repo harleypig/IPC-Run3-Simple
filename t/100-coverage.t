@@ -82,10 +82,12 @@ is( $basic_stderr, undef, 'ls did not report error on stderr' );
 like( $$basic_stdout, qr{^$0$}, "ls dumped $$basic_stdout to stdout" );
 like( $basic_time, qr/^\d+(?:\.\d+)?$/, "ls took $basic_time seconds to run");
 
-# test bad command 
-my ( $badcommand_stdout, $badcommand_stderr, $badcommand_syserr, $badcommand_time) = run3( [ 'badcommand' ] );
-ok( $badcommand_syserr == 0, 'ls did not cause system error' );
-is( $badcommand_stderr, undef, 'ls did not report error on stderr' );
-like( $$badcommand_stdout, qr{^$0$}, "ls dumped $$badcommand_stdout to stdout" );
-like( $badcommand_time, qr/^\d+(?:\.\d+)?$/, "ls took $badcommand_time seconds to run");
+# test syserr
+my $exit = 3;
+my $syserr = $exit * 256;
+my ( $syserr_stdout, $syserr_stderr, $syserr_syserr, $syserr_time) = run3( [ 'perl', '-e', "exit $exit" ] );
+is( $syserr_syserr, $syserr, "perl exit $exit caused correct system error ($syserr)" );
+is( $syserr_stderr, undef, 'perl exit $exit did not report error on stderr' );
+is( $$syserr_stdout, '', "perl exit $exit dumped nothing stdout" );
+like( $syserr_time, qr/^\d+(?:\.\d+)?$/, "perl exit $exit took $syserr_time seconds to run");
 
