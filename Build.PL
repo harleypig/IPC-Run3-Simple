@@ -14,9 +14,11 @@ my %module_build_args = (
     "Scalar::Util" => 0,
     "Test::CheckDeps" => 0,
     "Test::More" => "0.94",
+    "Test::Most" => 0,
+    "Test::NoWarnings" => 0,
     "Test::Requires" => 0,
     "Test::UseAllModules" => 0,
-    "perl" => "5.004"
+    "perl" => "5.006"
   },
   "configure_requires" => {
     "Module::Build" => "0.3601"
@@ -26,15 +28,17 @@ my %module_build_args = (
     "Alan Young <harleypig\@gmail.com>"
   ],
   "dist_name" => "IPC-Run3-Simple",
-  "dist_version" => "0.005",
+  "dist_version" => "0.006",
   "license" => "perl",
   "module_name" => "IPC::Run3::Simple",
   "recommends" => {},
   "recursive_test_files" => 1,
   "requires" => {
+    "Capture::Tiny" => 0,
     "Carp" => 0,
     "Exporter" => 0,
     "IPC::Run3" => 0,
+    "Time::HiRes" => 0,
     "strict" => 0,
     "warnings" => 0
   },

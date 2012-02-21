@@ -9,10 +9,18 @@ use Carp;
 use IPC::Run3 ();
 use Exporter 'import';
 
-our $VERSION = '0.005'; # VERSION
+our $VERSION = '0.006'; # VERSION
 
 our @EXPORT = qw( run3 );
-our %EXPORT_TAGS = ( 'all' => \@EXPORT );
+
+our @EXPORT_OK = qw(
+
+  chomp_err chomp_out croak_on_err default_stderr default_stdin default_stdout
+  tee_systemcall
+
+);
+
+our %EXPORT_TAGS = ( 'all' => [ @EXPORT, @EXPORT_OK ] );
 
 our $CHOMP_ERR      = 1;
 our $CHOMP_OUT      = 1;
@@ -20,14 +28,51 @@ our $CROAK_ON_ERR   = 0;
 our $DEFAULT_STDIN  = undef;
 our $DEFAULT_STDOUT = undef;
 our $DEFAULT_STDERR = undef;
+our $TEE_SYSTEMCALL = 0;
 
+BEGIN {
+
+  # Is Capture::Tiny available?
+
+  if ( eval { require Capture::Tiny } ) {
+
+    Capture::Tiny->import( 'tee' );
+    *tee_systemcall = sub { $TEE_SYSTEMCALL = ! ! +shift };
+
+  } else {
+
+    *tee_systemcall = sub { $TEE_SYSTEMCALL = 0 };
+
+  }
+
+  # Is Time::HiRes available?
+
+  if ( eval { require Time::HiRes } ) {
+
+    Time::HiRes->import( qw( gettimeofday tv_interval ) );
+
+  } else {
+
+    *gettimeofday = sub { time, 0 };
+
+    *tv_interval = sub {
+      my ( $t0, $t1 ) = @_;
+      $t1 = [ gettimeofday() ] unless defined $t1;
+      $t1->[ 0 ] - $t0->[ 0 ];
+    };
+
+  }
+}
+
+
+# '!! +shift' forces the value to be either undef or 1;
 
 sub chomp_err      { $CHOMP_ERR      = ! ! +shift }
 sub chomp_out      { $CHOMP_OUT      = ! ! +shift }
 sub croak_on_err   { $CROAK_ON_ERR   = ! ! +shift }
+sub default_stderr { $DEFAULT_STDERR = shift }
 sub default_stdin  { $DEFAULT_STDIN  = shift }
 sub default_stdout { $DEFAULT_STDOUT = shift }
-sub default_stderr { $DEFAULT_STDERR = shift }
 
 
 sub run3 {
@@ -74,7 +119,23 @@ sub run3 {
 
   }
 
-  IPC::Run3::run3( $cmd, $stdin, $stdout, $stderr, $options );
+  my $t0 = [ gettimeofday() ];
+
+  if ( $TEE_SYSTEMCALL ) {
+
+    # If you run 'perl -M-indirect -c thispackage' you will see a warning
+    # about this line.  This shouldn't be a problem because, hopefully,
+    # execution will never get here if Capture::Tiny isn't available.
+
+    ( $stdout, $stderr ) = tee { IPC::Run3::run3( $cmd, $stdin, undef, undef, $options ) };
+
+  } else {
+
+    IPC::Run3::run3( $cmd, $stdin, $stdout, $stderr, $options );
+
+  }
+
+  my $time = tv_interval( $t0 );
 
   my $syserr = $?;
 
@@ -93,7 +154,7 @@ sub run3 {
   chomp @$stderr
     if $CHOMP_ERR && ref $stderr eq 'ARRAY';
 
-  return ( $stdout, $stderr, $syserr )
+  return ( $stdout, $stderr, $syserr, $time )
     if $return_array;
 
 } ## end sub run3
@@ -114,7 +175,7 @@ IPC::Run3::Simple - Simple utility module to make the easy to use IPC::Run3 even
 
 =head1 VERSION
 
-  This document describes v0.005 of IPC::Run3::Simple - released February 15, 2012 as part of IPC-Run3-Simple.
+  This document describes v0.006 of IPC::Run3::Simple - released February 20, 2012 as part of IPC-Run3-Simple.
 
 =head1 SYNOPSIS
 
@@ -123,21 +184,21 @@ IPC::Run3::Simple - Simple utility module to make the easy to use IPC::Run3 even
  # Dead simple, ignoring system error and getting rid of the final newline in
  # the output.
 
- IPC::Run3::Simple::chomp_out( 1 );
- my ( $out, $err ) = run3( [qw( ls -AGlh )] );
+ my ( $out, $err ) = run3( [qw( ls -AGlh )] ); # syserr and timing is ignored
  die $err if $err;
 
  # Manipulate $out however you want.
 
  # Dump file listing into array, then chomp the array, ignoring any errors.
 
- IPC::Run3::Simple::chomp_out( 1 );
  my $args = {
 
   'cmd'    => [qw( ls -AGlh )],
   'stdout' => \my @files,
 
  };
+
+ run3( $args );
 
  for my $file ( @files ) { print "filename: $file\n" }
 
@@ -170,15 +231,19 @@ IPC::Run3::Simple - Simple utility module to make the easy to use IPC::Run3 even
 
   Set the default stderr to be used.
 
+=head2 tee_systemcall
+
+  Turn on or off teeing of system call.
+
 =head2 run3
 
 This method is exported into the calling namespace.
 
 Expects either a reference to an array or a reference to a hash.
 
-If a reference to an array is passed in then it is assumed to be a list of the
-command and option(s) to be run. A list containing the results, errors and exit
-code (in that order) will be returned. See SYNOPSIS for an example.
+If a reference to an array is passed it is assumed to be a list of the command
+and option(s) to be run. A list containing the results, errors, exit code and
+execution time (in that order) will be returned. See SYNOPSIS for an example.
 
 If a reference to a hash is passed in, the following information is expected:
 
@@ -190,13 +255,14 @@ If a reference to a hash is passed in, the following information is expected:
  'stderr'  Optional
  'options' Optional
 
-Note: If any of stdin, stdout or stderr are not passed in the hash 'undef' will be used in their place.
+Note: If any of stdin, stdout or stderr are not passed in the hash 'undef'
+will be used in their place.
 
 In addition, the following variables can be set, either in the hash passed in
 or globally via $IPC::Run3::Simple::VARIABLE.
 
- CROAK_ON_ERR If true, run3 will 'croak $stderr' instead of returning if $stderr
- contains anything.  Default is to return instead of croaking.
+ CROAK_ON_ERR If true, run3 will 'croak $stderr' instead of returning if
+ $stderr contains anything.  Default is to return instead of croaking.
 
  CHOMP_OUT If true, run3 will 'chomp $$stdout' if stdout is a scalar reference
  or 'chomp @$stdout' if stdout is an array reference. Otherwise, it has no
@@ -207,6 +273,12 @@ or globally via $IPC::Run3::Simple::VARIABLE.
  or 'chomp @$stderr' if stderr is an array reference. Otherwise, it has no
  effect. If false, nothing will be done to the error output of the call.
  Default is true.
+
+ TEE_SYSTEMCALL This depends on the L<Capture::Tiny> package.  If it is not
+ available this option will be silently ignored. If true, run3 will wrap the
+ system call in the Capture::Tiny::tee function which will dump the output to
+ STDERR and STDOUT as usual while still returning the output to the calling
+ function.
 
 =head1 INSTALLATION
 
