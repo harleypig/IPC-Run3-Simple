@@ -4,7 +4,7 @@ Revision history for {{ $dist->name }}
   - fixed up some documentation
   - added timing on system call
   - added option to tee output
-  - added option subs to export_ok
+  - added option functions to export_ok
 
 0.005     2012-02-15 12:09:47 America/Boise
   - Forgot to include the version number

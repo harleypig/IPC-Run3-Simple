@@ -30,6 +30,40 @@ our $DEFAULT_STDOUT  = undef;
 our $DEFAULT_STDERR  = undef;
 our $TEE_SYSTEMCALL  = 0;
 
+BEGIN {
+
+  # Is Capture::Tiny available?
+
+  if ( eval { require Capture::Tiny } ) {
+
+    Capture::Tiny->import( 'tee' );
+    *tee_systemcall = sub { $TEE_SYSTEMCALL = !! +shift };
+
+  } else {
+
+    *tee_systemcall = sub { $TEE_SYSTEMCALL = 0 };
+
+  }
+
+  # Is Time::HiRes available?
+
+  if ( eval { require Time::HiRes } ) {
+
+    Time::HiRes->import(qw( gettimeofday tv_interval ));
+
+  } else {
+
+    *gettimeofday = sub { time, 0 };
+
+    *tv_interval = sub {
+      my ( $t0, $t1 ) = @_;
+      $t1 = [ gettimeofday() ] unless defined $t1;
+      $t1->[0] - $t0->[0];
+    };
+
+  }
+}
+
 =method chomp_err
 
   If a false value is passed, run3 will not chomp any error if it's stored in
@@ -71,41 +105,6 @@ sub croak_on_err    { $CROAK_ON_ERR    = !! +shift }
 sub default_stderr  { $DEFAULT_STDERR  = shift }
 sub default_stdin   { $DEFAULT_STDIN   = shift }
 sub default_stdout  { $DEFAULT_STDOUT  = shift }
-
-# Is Capture::Tiny available?
-
-if ( eval { require Capture::Tiny } ) {
-
-  Capture::Tiny->import( 'tee' );
-  eval "sub tee_systemcall { \$TEE_SYSTEMCALL = !! +shift }";
-  croak "Unable to create tee_systemcall sub: $@" if $@;
-
-} else {
-
-  eval "sub tee_systemcall { \$TEE_SYSTEMCALL = 0 }";
-  croak "Unable to create tee_systemcall sub: $@" if $@;
-
-}
-
-# Is Time::HiRes available?
-
-if ( eval { require Time::HiRes } ) {
-
-  Time::HiRes->import(qw( gettimeofday tv_interval ));
-
-} else {
-
-  eval "sub gettimeofday { time, 0 }";
-  croak "Unable to create gettimeofday sub: $@" if $@;
-
-  eval q{sub tv_interval {
-    my ( $t0, $t1 ) = @_;
-    $t1 = [ gettimeofday() ] unless defined $t1;
-    $t1->[0] - $t0->[0];
-  }};
-  croak "Unable to create tv_interval sub: $@" if $@;
-
-}
 
 =method run3
 

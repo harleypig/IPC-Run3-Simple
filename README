@@ -3,7 +3,7 @@ NAME
     IPC::Run3 even more easy to use.
 
 VERSION
-      This document describes v0.005 of IPC::Run3::Simple - released February 15, 2012 as part of IPC-Run3-Simple.
+      This document describes v0.006 of IPC::Run3::Simple - released February 20, 2012 as part of IPC-Run3-Simple.
 
 SYNOPSIS
      use IPC::Run3::Simple;
@@ -11,21 +11,21 @@ SYNOPSIS
      # Dead simple, ignoring system error and getting rid of the final newline in
      # the output.
 
-     IPC::Run3::Simple::chomp_out( 1 );
-     my ( $out, $err ) = run3( [qw( ls -AGlh )] );
+     my ( $out, $err ) = run3( [qw( ls -AGlh )] ); # syserr and timing is ignored
      die $err if $err;
 
      # Manipulate $out however you want.
 
      # Dump file listing into array, then chomp the array, ignoring any errors.
 
-     IPC::Run3::Simple::chomp_out( 1 );
      my $args = {
 
       'cmd'    => [qw( ls -AGlh )],
       'stdout' => \my @files,
 
      };
+
+     run3( $args );
 
      for my $file ( @files ) { print "filename: $file\n" }
 
@@ -51,15 +51,18 @@ METHODS
   default_stderr
       Set the default stderr to be used.
 
+  tee_systemcall
+      Turn on or off teeing of system call.
+
   run3
     This method is exported into the calling namespace.
 
     Expects either a reference to an array or a reference to a hash.
 
-    If a reference to an array is passed in then it is assumed to be a list
-    of the command and option(s) to be run. A list containing the results,
-    errors and exit code (in that order) will be returned. See SYNOPSIS for
-    an example.
+    If a reference to an array is passed it is assumed to be a list of the
+    command and option(s) to be run. A list containing the results, errors,
+    exit code and execution time (in that order) will be returned. See
+    SYNOPSIS for an example.
 
     If a reference to a hash is passed in, the following information is
     expected:
@@ -78,8 +81,8 @@ METHODS
     In addition, the following variables can be set, either in the hash
     passed in or globally via $IPC::Run3::Simple::VARIABLE.
 
-     CROAK_ON_ERR If true, run3 will 'croak $stderr' instead of returning if $stderr
-     contains anything.  Default is to return instead of croaking.
+     CROAK_ON_ERR If true, run3 will 'croak $stderr' instead of returning if
+     $stderr contains anything.  Default is to return instead of croaking.
 
      CHOMP_OUT If true, run3 will 'chomp $$stdout' if stdout is a scalar reference
      or 'chomp @$stdout' if stdout is an array reference. Otherwise, it has no
@@ -90,6 +93,12 @@ METHODS
      or 'chomp @$stderr' if stderr is an array reference. Otherwise, it has no
      effect. If false, nothing will be done to the error output of the call.
      Default is true.
+
+     TEE_SYSTEMCALL This depends on the L<Capture::Tiny> package.  If it is not
+     available this option will be silently ignored. If true, run3 will wrap the
+     system call in the Capture::Tiny::tee function which will dump the output to
+     STDERR and STDOUT as usual while still returning the output to the calling
+     function.
 
 INSTALLATION
     See perlmodinstall for information and options on installing Perl
