@@ -1,6 +1,8 @@
 Revision history for {{ $dist->name }}
 
 {{$NEXT}}
+
+0.007     2012-02-29 12:12:34 America/Boise
   - fixed test for sleep and Time::HiRes not installed
 
 0.006     2012-02-20 22:43:31 America/Boise
