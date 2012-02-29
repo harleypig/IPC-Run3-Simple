@@ -9,7 +9,7 @@ use Carp;
 use IPC::Run3 ();
 use Exporter 'import';
 
-our $VERSION = '0.006'; # VERSION
+our $VERSION = '0.007'; # VERSION
 
 our @EXPORT = qw( run3 );
 
@@ -175,7 +175,7 @@ IPC::Run3::Simple - Simple utility module to make the easy to use IPC::Run3 even
 
 =head1 VERSION
 
-  This document describes v0.006 of IPC::Run3::Simple - released February 20, 2012 as part of IPC-Run3-Simple.
+  This document describes v0.007 of IPC::Run3::Simple - released February 29, 2012 as part of IPC-Run3-Simple.
 
 =head1 SYNOPSIS
 

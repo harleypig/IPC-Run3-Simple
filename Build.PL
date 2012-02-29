@@ -28,7 +28,7 @@ my %module_build_args = (
     "Alan Young <harleypig\@gmail.com>"
   ],
   "dist_name" => "IPC-Run3-Simple",
-  "dist_version" => "0.006",
+  "dist_version" => "0.007",
   "license" => "perl",
   "module_name" => "IPC::Run3::Simple",
   "recommends" => {},
