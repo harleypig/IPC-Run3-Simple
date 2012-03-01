@@ -1,6 +1,8 @@
 Revision history for {{ $dist->name }}
 
 {{$NEXT}}
+
+0.008     2012-03-01 13:08:38 America/Boise
   - fixed doc error for croak_on_err function
   - changed function to return dereferenced scalar instead of scalar reference
   - fixed tests to match change in how scalars are returned
