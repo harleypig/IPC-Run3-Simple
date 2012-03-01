@@ -18,8 +18,8 @@ my $sleep_time_rx    = qr/^($sleep_time|$sleep_time_fudge)$/;
 
 my ( $nohires_stdout, $nohires_stderr, $nohires_syserr, $nohires_time ) = run3( [ 'sleep', $sleep_time ] );
 ok( $nohires_syserr == 0, 'sleep did not cause system error (no Time::HiRes)' );
-is( $nohires_stderr,  undef, 'sleep did not report error on stderr (no Time::HiRes)' );
-is( $$nohires_stdout, '',    'sleep did not dump anythin stdout (no Time::HiRes)' );
+is( $nohires_stderr, undef, 'sleep did not report error on stderr (no Time::HiRes)' );
+is( $nohires_stdout, '',    'sleep did not dump anythin stdout (no Time::HiRes)' );
 like( $nohires_time, $sleep_time_rx, "sleep took $nohires_time seconds to run (no Time::HiRes)" );
 
 done_testing();

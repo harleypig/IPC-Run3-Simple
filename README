@@ -3,7 +3,7 @@ NAME
     IPC::Run3 even more easy to use.
 
 VERSION
-      This document describes v0.007 of IPC::Run3::Simple - released February 29, 2012 as part of IPC-Run3-Simple.
+      This document describes v0.008 of IPC::Run3::Simple - released March 01, 2012 as part of IPC-Run3-Simple.
 
 SYNOPSIS
      use IPC::Run3::Simple;
@@ -40,7 +40,7 @@ METHODS
 
   croak_on_err
       If a false value is passed, run3 will return instead of croaking on error.
-      Default is to croak on error.
+      Default is to return instead of croaking.
 
   default_stdin
       Set the default stdin to be used.
@@ -52,7 +52,8 @@ METHODS
       Set the default stderr to be used.
 
   tee_systemcall
-      Turn on or off teeing of system call.
+      Turn on or off teeing of system call.  If L<Capture::Tiny> is not installed
+      this will be ignored.
 
   run3
     This method is exported into the calling namespace.

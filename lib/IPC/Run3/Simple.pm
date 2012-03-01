@@ -9,7 +9,7 @@ use Carp;
 use IPC::Run3 ();
 use Exporter 'import';
 
-our $VERSION = '0.007'; # VERSION
+our $VERSION = '0.008'; # VERSION
 
 our @EXPORT = qw( run3 );
 
@@ -142,17 +142,27 @@ sub run3 {
   croak $stderr
     if $CROAK_ON_ERR && $$stderr ne '';
 
-  chomp $$stdout
-    if $CHOMP_OUT && ref $stdout eq 'SCALAR';
+  if ( ref $stdout eq 'SCALAR' ) {
 
-  chomp @$stdout
-    if $CHOMP_OUT && ref $stdout eq 'ARRAY';
+    $stdout = $$stdout;
+    chomp $stdout if $CHOMP_OUT;
 
-  chomp $$stderr
-    if $CHOMP_ERR && ref $stderr eq 'SCALAR';
+  } elsif ( ref $stdout eq 'ARRAY' && $CHOMP_OUT ) {
 
-  chomp @$stderr
-    if $CHOMP_ERR && ref $stderr eq 'ARRAY';
+    chomp @$stdout;
+
+  }
+
+  if ( ref $stderr eq 'SCALAR' ) {
+
+    $stderr = $$stderr;
+    chomp $stderr if $CHOMP_OUT;
+
+  } elsif ( ref $stderr eq 'ARRAY' && $CHOMP_OUT ) {
+
+    chomp @$stderr;
+
+  }
 
   return ( $stdout, $stderr, $syserr, $time )
     if $return_array;
@@ -175,7 +185,7 @@ IPC::Run3::Simple - Simple utility module to make the easy to use IPC::Run3 even
 
 =head1 VERSION
 
-  This document describes v0.007 of IPC::Run3::Simple - released February 29, 2012 as part of IPC-Run3-Simple.
+  This document describes v0.008 of IPC::Run3::Simple - released March 01, 2012 as part of IPC-Run3-Simple.
 
 =head1 SYNOPSIS
 
@@ -217,7 +227,7 @@ IPC::Run3::Simple - Simple utility module to make the easy to use IPC::Run3 even
 =head2 croak_on_err
 
   If a false value is passed, run3 will return instead of croaking on error.
-  Default is to croak on error.
+  Default is to return instead of croaking.
 
 =head2 default_stdin
 
@@ -233,7 +243,8 @@ IPC::Run3::Simple - Simple utility module to make the easy to use IPC::Run3 even
 
 =head2 tee_systemcall
 
-  Turn on or off teeing of system call.
+  Turn on or off teeing of system call.  If L<Capture::Tiny> is not installed
+  this will be ignored.
 
 =head2 run3
 

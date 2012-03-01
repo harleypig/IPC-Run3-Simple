@@ -76,14 +76,14 @@ throws_ok { run3() } qr/Expecting either an array ref or a hash ref/, 'not an ar
 my ( $basic_stdout, $basic_stderr, $basic_syserr, $basic_time ) = run3( [ 'ls', $0 ] );
 ok( $basic_syserr == 0, 'ls did not cause system error' );
 is( $basic_stderr, undef, 'ls did not report error on stderr' );
-like( $$basic_stdout, qr{^$0$},            "ls dumped $$basic_stdout to stdout" );
-like( $basic_time,    qr/^\d+(?:\.\d+)?$/, "ls took $basic_time seconds to run" );
+like( $basic_stdout, qr{^$0$},            "ls dumped $basic_stdout to stdout" );
+like( $basic_time,   qr/^\d+(?:\.\d+)?$/, "ls took $basic_time seconds to run" );
 
 # test syserr
 my $exit   = 3;
 my $syserr = $exit * 256;
 my ( $syserr_stdout, $syserr_stderr, $syserr_syserr, $syserr_time ) = run3( [ 'perl', '-e', "exit $exit" ] );
-is( $syserr_syserr,  $syserr, "perl exit $exit caused correct system error ($syserr)" );
-is( $syserr_stderr,  undef,   'perl exit $exit did not report error on stderr' );
-is( $$syserr_stdout, '',      "perl exit $exit dumped nothing stdout" );
+is( $syserr_syserr, $syserr, "perl exit $exit caused correct system error ($syserr)" );
+is( $syserr_stderr, undef,   'perl exit $exit did not report error on stderr' );
+is( $syserr_stdout, '',      "perl exit $exit dumped nothing stdout" );
 like( $syserr_time, qr/^\d+(?:\.\d+)?$/, "perl exit $exit took $syserr_time seconds to run" );

@@ -1,5 +1,10 @@
 Revision history for IPC-Run3-Simple
 
+0.008     2012-03-01 13:08:38 America/Boise
+  - fixed doc error for croak_on_err function
+  - changed function to return dereferenced scalar instead of scalar reference
+  - fixed tests to match change in how scalars are returned
+
 0.007     2012-02-29 12:12:34 America/Boise
   - fixed test for sleep and Time::HiRes not installed
 
