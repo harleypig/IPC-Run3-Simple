@@ -26,8 +26,8 @@ our $CHOMP_ERR       = 1;
 our $CHOMP_OUT       = 1;
 our $CROAK_ON_ERR    = 0;
 our $DEFAULT_STDIN   = undef;
-our $DEFAULT_STDOUT  = undef;
-our $DEFAULT_STDERR  = undef;
+our $DEFAULT_STDOUT  = \my $out;
+our $DEFAULT_STDERR  = \my $err;
 our $TEE_SYSTEMCALL  = 0;
 
 BEGIN {
@@ -81,15 +81,18 @@ BEGIN {
 
 =method default_stdin
 
-  Set the default stdin to be used.
+  Set the default stdin to be used. Default is 'undef' (inherits the parent's
+  STDIN filehandle). See L<IPC::Run3> documentation for other options.
 
 =method default_stdout
 
-  Set the default stdout be used.
+  Set the default stdout to be used. Default is a scalar reference. See
+  L<IPC::Run3> documentation for other options.
 
 =method default_stderr
 
-  Set the default stderr to be used.
+  Set the default stderr to be used. Default is a scalar reference. See
+  L<IPC::Run3> documentation for other options.
 
 =method tee_systemcall
 
@@ -161,14 +164,14 @@ sub run3 {
 
   my $return_array = 0;
 
-  my ( $cmd, $stdin, $stdout, $stderr, $options, $out );
+  my ( $cmd, $stdin, $stdout, $stderr, $options );
 
   if ( $ref eq 'ARRAY' ) {
 
     $return_array++;
     $cmd     = $arg;
     $stdin   = $DEFAULT_STDIN;
-    $stdout  = \$out;
+    $stdout  = $DEFAULT_STDOUT;
     $stderr  = $DEFAULT_STDERR;
     $options = {};
 
