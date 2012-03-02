@@ -1,5 +1,9 @@
 Revision history for IPC-Run3-Simple
 
+0.009     2012-03-01 17:30:24 America/Boise
+  - changed handling of default stdin and stdout to match more closely what
+    I wanted
+
 0.008     2012-03-01 13:08:38 America/Boise
   - fixed doc error for croak_on_err function
   - changed function to return dereferenced scalar instead of scalar reference

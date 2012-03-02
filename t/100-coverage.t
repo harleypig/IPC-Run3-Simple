@@ -22,9 +22,9 @@ my %expected_default = (
   CHOMP_ERR      => 1,
   CHOMP_OUT      => 1,
   CROAK_ON_ERR   => 0,
-  DEFAULT_STDERR => undef,
   DEFAULT_STDIN  => undef,
-  DEFAULT_STDOUT => undef,
+  DEFAULT_STDOUT => \my $out,
+  DEFAULT_STDERR => \my $err,
   TEE_SYSTEMCALL => 0,
 
 );
@@ -39,9 +39,9 @@ my %change_option = (
   CHOMP_ERR      => '',
   CHOMP_OUT      => '',
   CROAK_ON_ERR   => 1,
-  DEFAULT_STDERR => \my $test_change_err,
   DEFAULT_STDIN  => \my $test_change_in,
   DEFAULT_STDOUT => \my $test_change_out,
+  DEFAULT_STDERR => \my $test_change_err,
   TEE_SYSTEMCALL => 1,
 
 );
@@ -75,7 +75,7 @@ throws_ok { run3() } qr/Expecting either an array ref or a hash ref/, 'not an ar
 # test basic system call
 my ( $basic_stdout, $basic_stderr, $basic_syserr, $basic_time ) = run3( [ 'ls', $0 ] );
 ok( $basic_syserr == 0, 'ls did not cause system error' );
-is( $basic_stderr, undef, 'ls did not report error on stderr' );
+is( $basic_stderr, '', 'ls did not report error on stderr' );
 like( $basic_stdout, qr{^$0$},            "ls dumped $basic_stdout to stdout" );
 like( $basic_time,   qr/^\d+(?:\.\d+)?$/, "ls took $basic_time seconds to run" );
 
@@ -84,6 +84,6 @@ my $exit   = 3;
 my $syserr = $exit * 256;
 my ( $syserr_stdout, $syserr_stderr, $syserr_syserr, $syserr_time ) = run3( [ 'perl', '-e', "exit $exit" ] );
 is( $syserr_syserr, $syserr, "perl exit $exit caused correct system error ($syserr)" );
-is( $syserr_stderr, undef,   'perl exit $exit did not report error on stderr' );
+is( $syserr_stderr, '',      'perl exit $exit did not report error on stderr' );
 is( $syserr_stdout, '',      "perl exit $exit dumped nothing stdout" );
 like( $syserr_time, qr/^\d+(?:\.\d+)?$/, "perl exit $exit took $syserr_time seconds to run" );

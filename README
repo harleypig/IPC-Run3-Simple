@@ -3,7 +3,7 @@ NAME
     IPC::Run3 even more easy to use.
 
 VERSION
-      This document describes v0.008 of IPC::Run3::Simple - released March 01, 2012 as part of IPC-Run3-Simple.
+      This document describes v0.009 of IPC::Run3::Simple - released March 01, 2012 as part of IPC-Run3-Simple.
 
 SYNOPSIS
      use IPC::Run3::Simple;
@@ -43,13 +43,16 @@ METHODS
       Default is to return instead of croaking.
 
   default_stdin
-      Set the default stdin to be used.
+      Set the default stdin to be used. Default is 'undef' (inherits the parent's
+      STDIN filehandle). See L<IPC::Run3> documentation for other options.
 
   default_stdout
-      Set the default stdout be used.
+      Set the default stdout to be used. Default is a scalar reference. See
+      L<IPC::Run3> documentation for other options.
 
   default_stderr
-      Set the default stderr to be used.
+      Set the default stderr to be used. Default is a scalar reference. See
+      L<IPC::Run3> documentation for other options.
 
   tee_systemcall
       Turn on or off teeing of system call.  If L<Capture::Tiny> is not installed

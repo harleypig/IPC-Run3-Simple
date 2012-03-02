@@ -9,7 +9,7 @@ use Carp;
 use IPC::Run3 ();
 use Exporter 'import';
 
-our $VERSION = '0.008'; # VERSION
+our $VERSION = '0.009'; # VERSION
 
 our @EXPORT = qw( run3 );
 
@@ -26,8 +26,8 @@ our $CHOMP_ERR      = 1;
 our $CHOMP_OUT      = 1;
 our $CROAK_ON_ERR   = 0;
 our $DEFAULT_STDIN  = undef;
-our $DEFAULT_STDOUT = undef;
-our $DEFAULT_STDERR = undef;
+our $DEFAULT_STDOUT = \my $out;
+our $DEFAULT_STDERR = \my $err;
 our $TEE_SYSTEMCALL = 0;
 
 BEGIN {
@@ -82,14 +82,14 @@ sub run3 {
 
   my $return_array = 0;
 
-  my ( $cmd, $stdin, $stdout, $stderr, $options, $out );
+  my ( $cmd, $stdin, $stdout, $stderr, $options );
 
   if ( $ref eq 'ARRAY' ) {
 
     $return_array++;
     $cmd     = $arg;
     $stdin   = $DEFAULT_STDIN;
-    $stdout  = \$out;
+    $stdout  = $DEFAULT_STDOUT;
     $stderr  = $DEFAULT_STDERR;
     $options = {};
 
@@ -185,7 +185,7 @@ IPC::Run3::Simple - Simple utility module to make the easy to use IPC::Run3 even
 
 =head1 VERSION
 
-  This document describes v0.008 of IPC::Run3::Simple - released March 01, 2012 as part of IPC-Run3-Simple.
+  This document describes v0.009 of IPC::Run3::Simple - released March 01, 2012 as part of IPC-Run3-Simple.
 
 =head1 SYNOPSIS
 
@@ -231,15 +231,18 @@ IPC::Run3::Simple - Simple utility module to make the easy to use IPC::Run3 even
 
 =head2 default_stdin
 
-  Set the default stdin to be used.
+  Set the default stdin to be used. Default is 'undef' (inherits the parent's
+  STDIN filehandle). See L<IPC::Run3> documentation for other options.
 
 =head2 default_stdout
 
-  Set the default stdout be used.
+  Set the default stdout to be used. Default is a scalar reference. See
+  L<IPC::Run3> documentation for other options.
 
 =head2 default_stderr
 
-  Set the default stderr to be used.
+  Set the default stderr to be used. Default is a scalar reference. See
+  L<IPC::Run3> documentation for other options.
 
 =head2 tee_systemcall
 
