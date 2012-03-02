@@ -1,5 +1,8 @@
 Revision history for IPC-Run3-Simple
 
+0.010     2012-03-02 12:21:25 America/Boise
+  - fix croak when croak_on_err is true
+
 0.009     2012-03-01 17:30:24 America/Boise
   - changed handling of default stdin and stdout to match more closely what
     I wanted

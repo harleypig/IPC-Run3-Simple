@@ -9,7 +9,7 @@ use Carp;
 use IPC::Run3 ();
 use Exporter 'import';
 
-our $VERSION = '0.009'; # VERSION
+our $VERSION = '0.010'; # VERSION
 
 our @EXPORT = qw( run3 );
 
@@ -139,7 +139,7 @@ sub run3 {
 
   my $syserr = $?;
 
-  croak $stderr
+  croak $$stderr
     if $CROAK_ON_ERR && $$stderr ne '';
 
   if ( ref $stdout eq 'SCALAR' ) {
@@ -185,7 +185,7 @@ IPC::Run3::Simple - Simple utility module to make the easy to use IPC::Run3 even
 
 =head1 VERSION
 
-  This document describes v0.009 of IPC::Run3::Simple - released March 01, 2012 as part of IPC-Run3-Simple.
+  This document describes v0.010 of IPC::Run3::Simple - released March 02, 2012 as part of IPC-Run3-Simple.
 
 =head1 SYNOPSIS
 
