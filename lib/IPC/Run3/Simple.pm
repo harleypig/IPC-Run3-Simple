@@ -221,7 +221,7 @@ sub run3 {
 
   my $syserr = $?;
 
-  croak $stderr
+  croak $$stderr
     if $CROAK_ON_ERR && $$stderr ne '';
 
   if ( ref $stdout eq 'SCALAR' ) {
