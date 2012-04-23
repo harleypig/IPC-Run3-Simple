@@ -203,7 +203,11 @@ sub run3 {
 
   my $t0 = [ gettimeofday() ];
 
-  if ( $TEE_SYSTEMCALL ) {
+  if ( exists $ENV{ DEBUG_IPCR3S_CALL } ) {
+
+    $stdout = $cmd;
+
+  } elsif ( $TEE_SYSTEMCALL ) {
 
     # If you run 'perl -M-indirect -c thispackage' you will see a warning
     # about this line.  This shouldn't be a problem because, hopefully,
