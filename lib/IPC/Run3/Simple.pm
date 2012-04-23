@@ -9,7 +9,7 @@ use Carp;
 use IPC::Run3 ();
 use Exporter 'import';
 
-our $VERSION = '0.010'; # VERSION
+our $VERSION = '0.011'; # VERSION
 
 our @EXPORT = qw( run3 );
 
@@ -121,7 +121,11 @@ sub run3 {
 
   my $t0 = [ gettimeofday() ];
 
-  if ( $TEE_SYSTEMCALL ) {
+  if ( exists $ENV{ DEBUG_IPCR3S_CALL } ) {
+
+    $stdout = $cmd;
+
+  } elsif ( $TEE_SYSTEMCALL ) {
 
     # If you run 'perl -M-indirect -c thispackage' you will see a warning
     # about this line.  This shouldn't be a problem because, hopefully,
@@ -185,7 +189,7 @@ IPC::Run3::Simple - Simple utility module to make the easy to use IPC::Run3 even
 
 =head1 VERSION
 
-  This document describes v0.010 of IPC::Run3::Simple - released March 02, 2012 as part of IPC-Run3-Simple.
+  This document describes v0.011 of IPC::Run3::Simple - released April 23, 2012 as part of IPC-Run3-Simple.
 
 =head1 SYNOPSIS
 

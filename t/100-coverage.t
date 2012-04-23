@@ -2,7 +2,7 @@
 # These tests were created to satisfy Devel::Cover reports.  They are not
 # exhaustive and should not be considered as a complete test case.
 
-use Test::Most tests => 21;
+use Test::Most tests => 22;
 use Test::NoWarnings;
 use Carp;
 
@@ -87,3 +87,14 @@ is( $syserr_syserr, $syserr, "perl exit $exit caused correct system error ($syse
 is( $syserr_stderr, '',      'perl exit $exit did not report error on stderr' );
 is( $syserr_stdout, '',      "perl exit $exit dumped nothing stdout" );
 like( $syserr_time, qr/^\d+(?:\.\d+)?$/, "perl exit $exit took $syserr_time seconds to run" );
+
+# test debugging variable
+$ENV{ DEBUG_IPCR3S_CALL }++;
+my ( $debug_stdout, $debug_stderr, $debug_syserr, $debug_time ) = run3( [ 'ls', $0 ] );
+
+#ok( $debug_syserr == 0, 'ls did not cause system error' );
+#is( $debug_stderr, '', 'ls did not report error on stderr' );
+cmp_deeply( $debug_stdout, [ 'ls', $0 ], "got what would be called back (@$debug_stdout)" );
+
+#like( $debug_time, qr/^\d+(?:\.\d+)?$/, "ls took $debug_time seconds to run");
+delete $ENV{ DEBUG_IPCR3S_CALL };

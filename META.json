@@ -4,7 +4,7 @@
       "Alan Young <harleypig@gmail.com>"
    ],
    "dynamic_config" : 0,
-   "generated_by" : "Dist::Zilla version 4.300007, CPAN::Meta::Converter version 2.113640",
+   "generated_by" : "Dist::Zilla version 4.300014, CPAN::Meta::Converter version 2.120921",
    "license" : [
       "perl_5"
    ],
@@ -32,28 +32,27 @@
       },
       "runtime" : {
          "requires" : {
-            "Capture::Tiny" : 0,
-            "Carp" : 0,
-            "Exporter" : 0,
-            "IPC::Run3" : 0,
-            "Time::HiRes" : 0,
-            "strict" : 0,
-            "warnings" : 0
+            "Capture::Tiny" : "0",
+            "Carp" : "0",
+            "Exporter" : "0",
+            "IPC::Run3" : "0",
+            "Time::HiRes" : "0",
+            "strict" : "0",
+            "warnings" : "0"
          }
       },
       "test" : {
          "requires" : {
-            "English" : 0,
-            "File::Find" : 0,
-            "File::Temp" : 0,
-            "Scalar::Util" : 0,
-            "Test::CheckDeps" : 0,
+            "File::Find" : "0",
+            "File::Temp" : "0",
+            "Scalar::Util" : "0",
+            "Test::CheckDeps" : "0",
             "Test::More" : "0.94",
-            "Test::Most" : 0,
-            "Test::NoWarnings" : 0,
-            "Test::Requires" : 0,
-            "Test::UseAllModules" : 0,
-            "perl" : "5.006"
+            "Test::Most" : "0",
+            "Test::NoWarnings" : "0",
+            "Test::Requires" : "0",
+            "Test::UseAllModules" : "0",
+            "perl" : "5.004"
          }
       }
    },
@@ -61,6 +60,6 @@
    "resources" : {
       "repository" : {}
    },
-   "version" : "0.010"
+   "version" : "0.011"
 }
 

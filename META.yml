@@ -3,7 +3,6 @@ abstract: 'Simple utility module to make the easy to use IPC::Run3 even more eas
 author:
   - 'Alan Young <harleypig@gmail.com>'
 build_requires:
-  English: 0
   File::Find: 0
   File::Temp: 0
   Module::Build: 0.3601
@@ -14,11 +13,11 @@ build_requires:
   Test::NoWarnings: 0
   Test::Requires: 0
   Test::UseAllModules: 0
-  perl: 5.006
+  perl: 5.004
 configure_requires:
   Module::Build: 0.3601
 dynamic_config: 0
-generated_by: 'Dist::Zilla version 4.300007, CPAN::Meta::Converter version 2.113640'
+generated_by: 'Dist::Zilla version 4.300014, CPAN::Meta::Converter version 2.120921'
 license: perl
 meta-spec:
   url: http://module-build.sourceforge.net/META-spec-v1.4.html
@@ -37,4 +36,4 @@ requires:
   strict: 0
   warnings: 0
 resources: {}
-version: 0.010
+version: 0.011

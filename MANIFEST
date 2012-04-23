@@ -15,7 +15,6 @@ t/000-report-versions.t
 t/100-coverage.t
 t/110-no_timehires.t
 t/150-basic.t
-t/author-critic.t
 t/author-pod-spell.t
 t/author-test-eol.t
 t/release-check-changes.t

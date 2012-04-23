@@ -3,7 +3,7 @@ NAME
     IPC::Run3 even more easy to use.
 
 VERSION
-      This document describes v0.010 of IPC::Run3::Simple - released March 02, 2012 as part of IPC-Run3-Simple.
+      This document describes v0.011 of IPC::Run3::Simple - released April 23, 2012 as part of IPC-Run3-Simple.
 
 SYNOPSIS
      use IPC::Run3::Simple;
